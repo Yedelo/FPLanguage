@@ -1,8 +1,8 @@
 import { messageStore } from "../collector";
 import { randomElement } from "../commons";
 
-const wordAverager = {
-    average() {
+const averageWordReactor = {
+    react() {
         let chosenWords = [];
         let messages = this.getMessages();
         let wordSplitMessages = this.getWordSplitMessages();
@@ -37,4 +37,4 @@ const wordAverager = {
     },
 }
 
-export default wordAverager;
+export default averageWordReactor;
