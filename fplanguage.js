@@ -1,3 +1,3 @@
 import "./collector";
-import "./averager";
+import "./averager/wordAverager";
 import "./commands";
