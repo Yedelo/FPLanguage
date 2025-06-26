@@ -1,8 +1,9 @@
 import { messageStore } from "../collector";
+import { registerSubcommand } from "../commands/commands";
 import { randomElement } from "../commons";
 import { registerReactor } from "./reactors";
 
-const averageWordReactor = {
+export default averageWordReactor = {
     react() {
         let chosenWords = [];
         let messages = this.getMessages();
@@ -14,7 +15,7 @@ const averageWordReactor = {
             if (addition) chosenWords.push(addition);
         }
         let finalMessage = chosenWords.join(" ");
-        return finalMessage;
+        return `"${finalMessage}"`;
     },
 
     getMessages() {
@@ -40,4 +41,6 @@ const averageWordReactor = {
 
 registerReactor("word", averageWordReactor);
 
-export default averageWordReactor;
+registerSubcommand("stats", (args, sourceCallback) => {
+    sourceCallback(`${averageWordReactor.getMessageCount()} messages collected.`);
+});

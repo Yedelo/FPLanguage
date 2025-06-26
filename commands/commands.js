@@ -1,4 +1,4 @@
-import { LOGO } from "../commons";
+import { LOGO, randomString } from "../commons";
 import { handleError } from "../errorHandling";
 
 export const COMMAND_PREFIX = "!"
@@ -10,7 +10,7 @@ sources.set("ct_command", (message) => {
 });
 sources.set("guild_chat", (message) => {
     setTimeout(() => {
-        ChatLib.say(`/gc ${message.removeFormatting()}`);
+        ChatLib.say(`/gc ${message.removeFormatting()} @${randomString()}`);
     }, 500);
 })
 sources.set("bridge_bot", sources.get("guild_chat"));
