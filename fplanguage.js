@@ -1,6 +1,8 @@
 import "./commands/commands";
 import "./commands/ctCommandParser";
 import "./commands/guildChatCommandParser";
+import "./commands/privateMessageCommandParser";
+import "./reactors/averageCharacterReactor";
 import "./reactors/averageWordReactor";
 import "./reactors/reactors"
 import "./collector";

@@ -40,7 +40,3 @@ export default averageWordReactor = {
 }
 
 registerReactor("word", averageWordReactor);
-
-registerSubcommand("stats", (args, sourceCallback) => {
-    sourceCallback(`${averageWordReactor.getMessageCount()} messages collected.`);
-});
