@@ -1,5 +1,6 @@
 import { messageStore } from "../collector";
 import { randomElement } from "../commons";
+import { registerReactor } from "./reactors";
 
 const averageWordReactor = {
     react() {
@@ -36,5 +37,7 @@ const averageWordReactor = {
         return this.getTotalWordCount() / this.getMessageCount();
     },
 }
+
+registerReactor("word", averageWordReactor);
 
 export default averageWordReactor;

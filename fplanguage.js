@@ -1,2 +1,9 @@
+import "./commands/commands";
+import "./commands/ctCommandParser";
+import "./commands/guildChatCommandParser";
+import "./reactors/averageWordReactor";
+import "./reactors/reactors"
 import "./collector";
-import "./commands";
+import "./commons";
+import "./errorHandling";
+import "./guildChatEvent";
