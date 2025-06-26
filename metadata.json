@@ -1,0 +1,10 @@
+{
+    "name": "FPLanguage",
+    "description": "Collects and averages guild chat messages",
+    "version": "1.0.0",
+    "creator": "Yedel",
+    "entry": "fplanguage.js",
+    "requires": [
+        "tska"
+    ]
+}
