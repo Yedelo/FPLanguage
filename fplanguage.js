@@ -1,2 +1,3 @@
 import "./collector";
-import "./reactor";
+import "./averager";
+import "./commands";

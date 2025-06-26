@@ -1,0 +1,1 @@
+export const LOGO = "§3§l+ §r§lFPLanguage §3§l+";
