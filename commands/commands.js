@@ -41,5 +41,5 @@ export function handleCommandMessage(name, message, source) {
         sourceCallback(name, `§cNo subcommand found with name ${subcommand}!`);
         return;
     }
-    subcommandCallback(name, commandComponents.slice(1), sourceCallback);
+    new Thread(() => subcommandCallback(name, commandComponents.slice(1), sourceCallback)).start();
 }
