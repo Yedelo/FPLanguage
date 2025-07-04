@@ -6,6 +6,6 @@ import "./reactors/averageCharacterReactor";
 import "./reactors/averageWordReactor";
 import "./reactors/reactors"
 import "./collector";
-import "./commons";
-import "./errorHandling";
-import "./guildChatEvent";
+import "./utils/commons";
+import "./utils/errorHandling";
+import "./utils/guildChatEvent";
