@@ -1,12 +1,11 @@
-import { messageStore } from "../collector";
 import { randomElement } from "../commons";
 import { registerReactor } from "./reactors";
 
 export default averageCharacterReactor = {
-    react() {
+    react(messages) {
         let chosenCharacters = [];
-        for (let i = 0; i < this.getAverageCharacterCount(); i ++) {
-            let thatCharacterOfEveryMessage = this.getMessages().map((message) => message[i]);
+        for (let i = 0; i < this.getAverageCharacterCount(messages); i ++) {
+            let thatCharacterOfEveryMessage = messages.map((message) => message[i]);
             let addition = randomElement(thatCharacterOfEveryMessage);
             if (addition) chosenCharacters.push(addition);
         }
@@ -14,20 +13,16 @@ export default averageCharacterReactor = {
         return `"${finalMessage}"`;
     },
 
-    getMessages() {
-        return messageStore.messages.map((message) => message.message);
+    getMessageCount(messages) {
+        return messages.length;
     },
 
-    getMessageCount() {
-        return this.getMessages().length;
+    getTotalCharacterCount(messages) {
+        return messages.map((message) => message.length).reduce((a, b) => a + b);
     },
 
-    getTotalCharacterCount() {
-        return this.getMessages().map((message) => message.length).reduce((a, b) => a + b);
-    },
-
-    getAverageCharacterCount() {
-        return this.getTotalCharacterCount() / this.getMessageCount();
+    getAverageCharacterCount(messages) {
+        return this.getTotalCharacterCount(messages) / this.getMessageCount(messages);
     }
 }
 

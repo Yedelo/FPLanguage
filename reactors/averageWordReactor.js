@@ -1,14 +1,11 @@
-import { messageStore } from "../collector";
-import { registerSubcommand } from "../commands/commands";
 import { randomElement } from "../commons";
 import { registerReactor } from "./reactors";
 
 export default averageWordReactor = {
-    react() {
+    react(messages) {
         let chosenWords = [];
-        let messages = this.getMessages();
-        let wordSplitMessages = this.getWordSplitMessages();
-        let averageWordCount = this.getAverageWordCount();
+        let wordSplitMessages = this.getWordSplitMessages(messages);
+        let averageWordCount = this.getAverageWordCount(messages);
         for (let i = 0; i < averageWordCount; i ++) {
             let thatWordOfEveryWordSplitMessage = wordSplitMessages.map((wordSplitMessage) => wordSplitMessage[i]);
             let addition = randomElement(thatWordOfEveryWordSplitMessage);
@@ -18,24 +15,20 @@ export default averageWordReactor = {
         return `"${finalMessage}"`;
     },
 
-    getMessages() {
-        return messageStore.messages.map((message) => message.message);
+    getMessageCount(messages) {
+        return messages.length;
     },
 
-    getMessageCount() {
-        return this.getMessages().length;
+    getWordSplitMessages(messages) {
+        return messages.map((message) => message.split(" "));
     },
 
-    getWordSplitMessages() {
-        return this.getMessages().map((message) => message.split(" "));
+    getTotalWordCount(messages) {
+        return this.getWordSplitMessages(messages).map((wordSplitMessage) => wordSplitMessage.length).reduce((a, b) => a + b)
     },
 
-    getTotalWordCount() {
-        return this.getWordSplitMessages().map((wordSplitMessage) => wordSplitMessage.length).reduce((a, b) => a + b)
-    },
-
-    getAverageWordCount() {
-        return this.getTotalWordCount() / this.getMessageCount();
+    getAverageWordCount(messages) {
+        return this.getTotalWordCount(messages) / this.getMessageCount(messages);
     },
 }
 

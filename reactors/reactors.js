@@ -1,3 +1,4 @@
+import { messageStore } from "../collector";
 import { registerSubcommand } from "../commands/commands";
 
 let reactors = new Map();
@@ -12,7 +13,8 @@ registerSubcommand("react", (name, args, sourceCallback) => {
         sourceCallback(name, `§cCouldn't find a reactor with name ${reactorName}!`);
         return;
     }
-    sourceCallback(name, reactor.react());
+    let messages = messageStore.messages.map((message) => message.message);
+    sourceCallback(name, reactor.react(messages));
 });
 
 export function registerReactor(name, reactor) {
