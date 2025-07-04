@@ -1,4 +1,4 @@
-import EventListener from "../tska/event/EventListener";
+import EventListener from "../../tska/event/EventListener";
 
 export const GUILD_CHAT_EVENT_NAME = "fplanguage:guild_chat_event";
 const GUILD_CHAT_REGEX = /Guild > (?:\[.*\] )?(.*) \[.*\]: (.*)/;

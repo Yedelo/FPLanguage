@@ -1,4 +1,4 @@
-import { randomElement } from "../commons";
+import { randomElement } from "../utils/commons";
 import { registerReactor } from "./reactors";
 
 export default averageWordReactor = {

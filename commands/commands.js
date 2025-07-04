@@ -1,5 +1,5 @@
-import { LOGO, randomString } from "../commons";
-import { handleError } from "../errorHandling";
+import { LOGO, randomString } from "../utils/commons";
+import { handleError } from "../utils/errorHandling";
 
 export const COMMAND_PREFIX = "!fplanguage";
 const subcommands = new Map();

@@ -1,6 +1,6 @@
 import { LocalStore } from "../tska/storage/LocalStore";
 import EventListener from "../tska/event/EventListener";
-import { GUILD_CHAT_EVENT_NAME } from "./guildChatEvent";
+import { GUILD_CHAT_EVENT_NAME } from "./utils/guildChatEvent";
 
 export const messageStore = new LocalStore("FPLanguage", {
     messages: []
