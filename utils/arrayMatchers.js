@@ -1,5 +1,7 @@
 import { randomElement } from "./commons";
 
+export const MATCHER_PREFIX = "matcher:";
+
 const matchers = new Map();
 
 function registerMatcher(regex, matcher) {

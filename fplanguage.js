@@ -3,7 +3,6 @@ import "./commands/ctCommandParser";
 import "./commands/guildChatCommandParser";
 import "./commands/privateMessageCommandParser";
 import "./reactors/averageCharacterReactor";
-import "./reactors/averagePhraseReactor";
 import "./reactors/averageWordReactor";
 import "./reactors/reactors"
 import "./collector";
