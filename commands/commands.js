@@ -33,7 +33,7 @@ export function handleCommandMessage(name, message, source) {
     let commandComponents = message.split(" ");
     let subcommand = commandComponents[0];
     if (!subcommand) {
-        sourceCallback(name, "§cNo subcommand provided! Use help for help.");
+        sourceCallback(name, "§cNo subcommand provided!");
         return;
     }
     let subcommandCallback = subcommands.get(subcommand);
