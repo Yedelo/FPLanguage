@@ -6,7 +6,7 @@ function registerMatcher(regex, matcher) {
     matchers.set(regex, matcher);
 }
 
-registerMatcher(/all/, (pattern, string, array) => array);
+registerMatcher(/^all$/, (pattern, string, array) => array);
 
 registerMatcher(/random\[([0-9]+)\]/, (pattern, string, array) => {
     let match = string.match(pattern);
