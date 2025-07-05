@@ -23,14 +23,13 @@ registerMatcher(/random\[([0-9]+)\]/, (pattern, string, array) => {
 });
 
 export function getMatchedArray(string, array) {
-    let result = [];
-    matchers.forEach((value, key) => {
-        if (key.test(string)) {
-            let attempt = value(key, string, array);
-            if (attempt && attempt.length != 0) {
-                result = attempt;
+    let result = array;
+    string.split("&").forEach((matcherSyntax) => {
+        matchers.forEach((value, key) => {
+            if (key.test(matcherSyntax)) {
+                result = value(key, matcherSyntax, result);
             }
-        }
-    });
+        })
+    })
     return result;
 }
