@@ -1,5 +1,13 @@
 export const LOGO = "§3§l+ §r§lFPLanguage §3§l+";
 
+export function randomInt(min, max) {
+    return Math.round(randomNumber(min, max));
+}
+
+export function randomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 export function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }

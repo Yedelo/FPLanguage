@@ -4,8 +4,9 @@ import "./commands/guildChatCommandParser";
 import "./commands/privateMessageCommandParser";
 import "./reactors/averageCharacterReactor";
 import "./reactors/averageWordReactor";
-import "./reactors/reactors"
-import "./toplevel/toplevel"
+import "./reactors/reactors";
+import "./toplevel/toplevel";
+import "./toplevel/ratings";
 import "./collector";
 import "./utils/commons";
 import "./utils/errorHandling";

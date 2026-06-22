@@ -39,18 +39,19 @@ export function handleCommandMessage(name, message, source) {
     console.log(`Name: ${name}`);
     console.log(`Message: ${message}`);
     console.log(`Source: ${source}`);
-    let sourceCallback = sources.get(source);
+    const sourceCallback = sources.get(source);
     if (!sourceCallback) {
         handleError(`No command source found with name ${source}!`);
         return;
     }
-    let commandComponents = message.split(" ").slice(1);
-    let subcommand = commandComponents[0];
+    const admin = source == "ct_command";
+    const commandComponents = message.split(" ").slice(1);
+    const subcommand = commandComponents[0];
     if (!subcommand) {
         sourceCallback(name, "§cNo subcommand provided!");
         return;
     }
-    let subcommandCallback = subcommands.get(subcommand);
+    const subcommandCallback = subcommands.get(subcommand);
     if (!subcommandCallback) {
         sourceCallback(name, `§cNo subcommand found with name ${subcommand}!`);
         return;
@@ -69,7 +70,7 @@ export function handleCommandMessage(name, message, source) {
         let value = rawArgAsList[1];
         args.set(name, value);
     };
-    new Thread(() => subcommandCallback(name, args, sourceCallback)).start();
+    new Thread(() => subcommandCallback(name, args, sourceCallback, admin)).start();
 }
 
 global.hcm = handleCommandMessage;
