@@ -18,22 +18,22 @@ registerSubcommand("react", (name, args, sourceCallback) => {
         messages = sentences.data.map((sentenceData) => sentenceData.sentence);
     }
     else {
-        sourceCallback(name, `§cCouldn't find a message set with name ${from}!`);
+        sourceCallback(`§cCouldn't find a message set with name ${from}!`);
         return;
     }
     const reactorName = args.get("reactor") || "word";
     let reactor = reactors.get(reactorName);
     if (!reactor) {
-        sourceCallback(name, `§cCouldn't find a reactor with name ${reactorName}!`);
+        sourceCallback(`§cCouldn't find a reactor with name ${reactorName}!`);
         return;
     }
     const matcher = args.get("matcher") || "all";
     const matchedMessages = getMatchedArray(matcher, messages);
     if (!matchedMessages || matchedMessages.length == 0) {
-        sourceCallback(name, `§cNo elements found with matcher ${matcher}!`);
+        sourceCallback(`§cNo elements found with matcher ${matcher}!`);
         return;
     }
-    sourceCallback(name, reactor.react(matchedMessages));
+    sourceCallback(reactor.react(matchedMessages));
 });
 
 export function registerReactor(name, reactor) {

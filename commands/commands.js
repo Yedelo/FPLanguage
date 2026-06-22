@@ -36,21 +36,25 @@ export function approachHandleCommandMessage(name, message, source) {
 }
 
 export function handleCommandMessage(name, message, source) {
-    const sourceCallback = sources.get(source);
-    if (!sourceCallback) {
+    const ogSourceCallback = sources.get(source);
+    if (!ogSourceCallback) {
         handleError(`No command source found with name ${source}!`);
         return;
+    }
+    const sourceCallback = (msg) => {
+        const func = ogSourceCallback;
+        func(name, msg);
     }
     const admin = source == "ct_command";
     const commandComponents = message.split(" ").slice(1);
     const subcommand = commandComponents[0];
     if (!subcommand) {
-        sourceCallback(name, "§cNo subcommand provided!");
+        sourceCallback("§cNo subcommand provided!");
         return;
     }
     const subcommandCallback = subcommands.get(subcommand);
     if (!subcommandCallback) {
-        sourceCallback(name, `§cNo subcommand found with name ${subcommand}!`);
+        sourceCallback(`§cNo subcommand found with name ${subcommand}!`);
         return;
     }
     const args = new Map();
