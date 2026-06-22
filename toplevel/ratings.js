@@ -8,17 +8,34 @@ const ratingCommands = new LocalStore("FPLanguage", {
         {
             name: "simple",
             format: "${playerName} is ${percent}% ${word}!",
-            words: []
+            words: [
+                {
+                    word: "goated"
+                }
+            ]
         },
         {
             name: "skill",
             format: "${playerName} is ${percent}% good at ${word}!",
-            words: []
+            words: [
+                {
+                    word: "bedwars"
+                }
+            ]
         },
         {
             name: "amount",
             format: "${playerName} has ${percent} ${word}!",
-            words: []
+            words: [
+                {
+                    word: "iq",
+                    min: 30,
+                    max: 200,
+                    overrides: {
+                        Yedel: 250
+                    }
+                }
+            ]
         }
     ]
 }, "data/persistent/ratingCommands.json");
@@ -29,7 +46,7 @@ registerToplevelHandler((name, args, sourceCallback) => {
     ratingCommands.commands.forEach((command) => {
         command.words.forEach((word) => {
             if (wordArg == word.word) {
-                const percent = word.overrides[playerName] ?? randomInt(word.min ?? command.min ?? 0, word.max ?? command.max ?? 101);
+                const percent = word.overrides?.[playerName] ?? randomInt(word.min ?? command.min ?? 0, word.max ?? command.max ?? 101);
                 const message = (word.format ?? command.format)
                     .replaceAll("${playerName}", playerName)
                     .replaceAll("${percent}", percent)
@@ -67,8 +84,7 @@ registerSubcommand("addword", (name, args, sourceCallback, admin) => {
     }
     command.words.push(
         {
-            word: wordArg,
-            overrides: new Map
+            word: wordArg
         }
     );
     sourceCallback(name, `Added word "${wordArg}" to command ${commandArg}!`);
