@@ -36,9 +36,6 @@ export function approachHandleCommandMessage(name, message, source) {
 }
 
 export function handleCommandMessage(name, message, source) {
-    console.log(`Name: ${name}`);
-    console.log(`Message: ${message}`);
-    console.log(`Source: ${source}`);
     const sourceCallback = sources.get(source);
     if (!sourceCallback) {
         handleError(`No command source found with name ${source}!`);
