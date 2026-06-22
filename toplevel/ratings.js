@@ -90,11 +90,43 @@ registerSubcommand("addword", (name, args, sourceCallback, admin) => {
     sourceCallback(name, `Added word "${wordArg}" to command ${commandArg}!`);
 });
 
+// /fplanguage addoverride iq yedel 250
+registerSubcommand("addoverride", (name, args, sourceCallback, admin) => {
+    if (!admin) return;
+    const wordArg = args.get("word") || args.get(0);
+    if (!wordArg) {
+        sourceCallback(name, "§cYou must provide a word to override!");
+        return;
+    }
+    const nameArg = args.get("name") || args.get(1);
+    if (!nameArg) {
+        sourceCallback(name, "§cYou must provide a name to override for!");
+        return;
+    }
+    const valueArg = args.get("value") || args.get(2);
+    if (!valueArg) {
+        sourceCallback(name, "§cYou must provide a value to override with!");
+        return;
+    }
+    for (let command of ratingCommands.commands) {
+        for (let word of command.words) {
+            if (word.word == wordArg) {
+                if (!word.overrides) word.overrides = new Map();
+                word.overrides[nameArg] = valueArg;
+                sourceCallback(name, `Set override for word "${wordArg}" to ${valueArg} for ${nameArg}!`);
+                return;
+            }
+        }
+    }
+    sourceCallback(name, `§cCouldn't find word "${wordArg}"!`)
+});
+
 registerSubcommand("removeword", (name, args, sourceCallback, admin) => {
     if (!admin) return;
     const wordArg = args.get("word") || args.get(0);
     if (!wordArg) {
         sourceCallback(name, "§cYou must provide a word to remove!");
+        return;
     }
     for (let command of ratingCommands.commands) {
         command.words = command.words.filter((word) => word.word != wordArg);
