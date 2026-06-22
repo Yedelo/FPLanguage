@@ -5,6 +5,7 @@ import "./commands/privateMessageCommandParser";
 import "./reactors/averageCharacterReactor";
 import "./reactors/averageWordReactor";
 import "./reactors/reactors"
+import "./toplevel/toplevel"
 import "./collector";
 import "./utils/commons";
 import "./utils/errorHandling";

@@ -1,27 +1,39 @@
 import { messageStore } from "../collector";
 import { registerSubcommand } from "../commands/commands";
-import { getMatchedArray, MATCHER_PREFIX } from "../utils/arrayMatchers";
+import { getMatchedArray } from "../utils/arrayMatchers";
 
 let reactors = new Map();
+let sentences;
 
 registerSubcommand("react", (name, args, sourceCallback) => {
-    let reactorName = args[0];
-    if (!reactorName) {
-        sourceCallback(name, `§cNo reactor name provided!`);
+    const from = args.get("from") || "guild";
+    let messages;
+    if (from == "guild") {
+        messages = messageStore.messages.map((message) => message.message);
+    }
+    else if (from == "sentences") {
+        if (!sentences) {
+            sentences = JSON.parse(FileLib.read("FPLanguage", "data/static/sentences.json"));
+        }
+        messages = sentences.data.map((sentenceData) => sentenceData.sentence);
+    }
+    else {
+        sourceCallback(name, `§cCouldn't find a message set with name ${from}!`);
         return;
     }
+    const reactorName = args.get("reactor") || "word";
     let reactor = reactors.get(reactorName);
     if (!reactor) {
         sourceCallback(name, `§cCouldn't find a reactor with name ${reactorName}!`);
         return;
     }
-    let matcher = args[1]?.startsWith(MATCHER_PREFIX) ? args[1].substring(MATCHER_PREFIX.length) : "all";
-    let messages = getMatchedArray(matcher, messageStore.messages.map((message) => message.message));
-    if (!messages || messages.length == 0) {
+    const matcher = args.get("matcher") || "all";
+    const matchedMessages = getMatchedArray(matcher, messages);
+    if (!matchedMessages || matchedMessages.length == 0) {
         sourceCallback(name, `§cNo elements found with matcher ${matcher}!`);
         return;
     }
-    sourceCallback(name, reactor.react(messages));
+    sourceCallback(name, reactor.react(matchedMessages));
 });
 
 export function registerReactor(name, reactor) {
