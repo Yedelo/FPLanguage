@@ -45,7 +45,7 @@ export function handleCommandMessage(name, message, source) {
         const func = ogSourceCallback;
         func(name, msg);
     }
-    const admin = source == "ct_command";
+    const admin = source == "ct";
     const commandComponents = message.split(" ").slice(1);
     const subcommand = commandComponents[0];
     if (!subcommand) {
