@@ -1,4 +1,4 @@
-import { internal } from "../commands/commands";
+import { internal, registerSubcommand } from "../commands/commands";
 import { randomInt } from "../utils/commons";
 import { registerToplevelCommand } from "./toplevel";
 
@@ -15,8 +15,17 @@ registerToplevelCommand("guildvalue", (name, args, sourceCallback) => {
     sourceCallback(`Guild value is currently ${totalGuildValue}, ${playerName} is changing it by ${guildValueMap.get(playerName)}!`);
 });
 
-// would be nice if this was not a chattriggers thing but it works for now
-register("step", () => {
+function clearGuildValueMap() {
     guildValueMap.clear();
     internal("Cleared guild value map!");
+}
+
+registerSubcommand("clearguildvalue", (name, args, sourceCallback, admin) => {
+    if (!admin) return;
+    clearGuildValueMap();
+});
+
+// would be nice if this was not a chattriggers thing but it works for now
+register("step", () => {
+    clearGuildValueMap();
 }).setDelay(REFRESH_DELAY);
