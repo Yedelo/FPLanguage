@@ -6,7 +6,7 @@ export const FPL_COMMAND_PREFIX = COMMAND_PREFIX + "fplanguage";
 export const subcommands = new Map();
 const sources = new Map();
 
-sources.set("ct_command", (name, message) => {
+sources.set("ct", (name, message) => {
     ChatLib.chat(`${LOGO} §r${message}`);
 });
 sources.set("guild_chat", (name, message) => {
