@@ -9,7 +9,7 @@ registerToplevelCommand("guildvalue", (name, args, sourceCallback) => {
     const playerName = args.get(1) ?? name;
     if (!guildValueMap.has(playerName)) {
         // we don't like positivity around here
-        guildValueMap.set(playerName, randomInt(-100000, 50000));
+        guildValueMap.set(playerName, randomInt(-100000, 100000));
     }
     const totalGuildValue = [...guildValueMap.values()].reduce((a, b) => a + b);
     sourceCallback(`Guild value is currently ${totalGuildValue}, ${playerName} is changing it by ${guildValueMap.get(playerName)}!`);
