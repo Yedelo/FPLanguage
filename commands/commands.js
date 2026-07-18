@@ -74,4 +74,8 @@ export function handleCommandMessage(name, message, source) {
     new Thread(() => subcommandCallback(name, args, sourceCallback, admin)).start();
 }
 
+export function internal(message) {
+    sources.get("ct")(Player.getName(), message);
+}
+
 global.hcm = handleCommandMessage;

@@ -1,3 +1,4 @@
+import { internal } from "../commands/commands";
 import { randomInt } from "../utils/commons";
 import { registerToplevelCommand } from "./toplevel";
 
@@ -17,4 +18,5 @@ registerToplevelCommand("guildvalue", (name, args, sourceCallback) => {
 // would be nice if this was not a chattriggers thing but it works for now
 register("step", () => {
     guildValueMap.clear();
+    internal("Cleared guild value map!");
 }).setDelay(REFRESH_DELAY);
