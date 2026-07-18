@@ -7,6 +7,7 @@ import "./reactors/averageWordReactor";
 import "./reactors/reactors";
 import "./toplevel/toplevel";
 import "./toplevel/ratings";
+import "./toplevel/guildvalue";
 import "./collector";
 import "./utils/commons";
 import "./utils/errorHandling";
