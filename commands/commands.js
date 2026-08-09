@@ -6,21 +6,29 @@ export const FPL_COMMAND_PREFIX = COMMAND_PREFIX + "fplanguage";
 export const subcommands = new Map();
 const sources = new Map();
 
-sources.set("ct", (name, message) => {
+sources.set("ct", (name, message, extra) => {
     ChatLib.chat(`${LOGO} §r${message}`);
 });
-sources.set("guild_chat", (name, message) => {
+sources.set("guild_chat", (name, message, extra) => {
     setTimeout(() => {
-        ChatLib.say(`/gc ${message.removeFormatting()} @${randomString(8)}`);
+        let sent = `/gc ${message.removeFormatting()}`;
+        if (!extra || !extra.noAntiSpam) {
+            sent += ` @${randomString(8)}`;
+        }
+        ChatLib.say(sent);
     }, 500);
 })
 sources.set("bridge_bot", sources.get("guild_chat"));
-sources.set("private_message", (name, message) => {
+sources.set("private_message", (name, message, extra) => {
     setTimeout(() => {
-        ChatLib.say(`/w ${name} ${message.removeFormatting()} @${randomString(8)}`);
+        let sent = `/w ${name} ${message.removeFormatting()}`;
+        if (!extra || !extra.noAntiSpam) {
+            sent += ` @${randomString(8)}`;
+        }
+        ChatLib.say(sent);
     }, 500);
 });
-sources.set("copy", (name, message) => {
+sources.set("copy", (name, message, extra) => {
     java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new java.awt.datatransfer.StringSelection(message.removeFormatting().replaceAll("\"", "")), null);
 });
 
@@ -41,9 +49,9 @@ export function handleCommandMessage(name, message, source) {
         handleError(`No command source found with name ${source}!`);
         return;
     }
-    const sourceCallback = (msg) => {
+    const sourceCallback = (msg, extra) => {
         const func = ogSourceCallback;
-        func(name, msg);
+        func(name, msg, extra);
     }
     const admin = source == "ct";
     const commandComponents = message.split(" ").slice(1);
