@@ -7,7 +7,7 @@ const BRIDGE_MESSAGE_REGEX = /([^ ]*)(?: replying to .*)? » (.*)/;
 EventListener.createEvent(GUILD_CHAT_EVENT_NAME);
 
 register("chat", (event) => {
-    let chatMessage = ChatLib.getChatMessage(event, false).removeFormatting();
+    let chatMessage = removeProperFormatting(event.message.func_150254_d());
     let guildChatMatch = GUILD_CHAT_REGEX.exec(chatMessage);
     if (guildChatMatch) {
         let guildChatName = guildChatMatch[1];
@@ -21,3 +21,7 @@ register("chat", (event) => {
         }
     }
 });
+
+function removeProperFormatting(text) {
+	return text.replaceAll(/§[0-9a-fk-or]/g, "")
+}
