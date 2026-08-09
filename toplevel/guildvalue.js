@@ -6,7 +6,7 @@ const REFRESH_DELAY = 3600;
 const guildValueMap = new Map();
 
 registerToplevelCommand("guildvalue", (name, args, sourceCallback) => {
-    const playerName = args.get(1) ?? name;
+    const playerName = name;
     if (!guildValueMap.has(playerName)) {
         // we don't like positivity around here
         guildValueMap.set(playerName, randomInt(-100000, 100000));
