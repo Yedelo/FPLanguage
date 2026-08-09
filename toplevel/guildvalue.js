@@ -5,14 +5,13 @@ import { registerToplevelCommand } from "./toplevel";
 const REFRESH_DELAY = 3600;
 const guildValueMap = new Map();
 
-registerToplevelCommand("guildvalue", (name, args, sourceCallback) => {
-    const playerName = name;
+registerToplevelCommand("guildvalue", (source) => {
+    const playerName = source.name;
     if (!guildValueMap.has(playerName)) {
-        // we don't like positivity around here
         guildValueMap.set(playerName, randomInt(-100000, 100000));
     }
     const totalGuildValue = [...guildValueMap.values()].reduce((a, b) => a + b);
-    sourceCallback(`Guild value is currently ${totalGuildValue}, ${playerName} is changing it by ${guildValueMap.get(playerName)}!`);
+    source.respond(`Guild value is currently ${totalGuildValue}, ${playerName} is changing it by ${guildValueMap.get(playerName)}!`);
 });
 
 function clearGuildValueMap() {
@@ -20,8 +19,8 @@ function clearGuildValueMap() {
     internal("Cleared guild value map!");
 }
 
-registerSubcommand("clearguildvalue", (name, args, sourceCallback, admin) => {
-    if (!admin) return;
+registerSubcommand("clearguildvalue", (source) => {
+    if (!source.admin) return;
     clearGuildValueMap();
 });
 

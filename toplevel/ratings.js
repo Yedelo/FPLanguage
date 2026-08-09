@@ -40,9 +40,9 @@ const ratingCommands = new LocalStore("FPLanguage", {
     ]
 }, "data/persistent/ratingCommands.json");
 
-registerToplevelHandler((name, args, sourceCallback) => {
-    const wordArg = args.get(0);
-    const playerName = args.get(1) ?? name;
+registerToplevelHandler((source) => {
+    const wordArg = source.args.get(0);
+    const playerName = source.args.get(1) ?? source.name;
     ratingCommands.commands.forEach((command) => {
         command.words.forEach((word) => {
             if (wordArg == word.word) {
@@ -51,33 +51,33 @@ registerToplevelHandler((name, args, sourceCallback) => {
                     .replaceAll("${playerName}", playerName)
                     .replaceAll("${percent}", percent)
                     .replaceAll("${word}", word.word);
-                sourceCallback(message);
+                source.respond(message);
             }
         });
     });
 });
 
-registerSubcommand("addword", (name, args, sourceCallback, admin) => {
-    if (!admin) return;
-    const commandArg = args.get("command") || args.get(0);
+registerSubcommand("addword", (source) => {
+    if (!source.admin) return;
+    const commandArg = source.args.get("command") || source.args.get(0);
     if (!commandArg) {
-        sourceCallback("§cYou must provide a command type!");
+        source.respond("§cYou must provide a command type!");
         return;
     }
     const command = ratingCommands.commands.find((command) => command.name == commandArg);
     if (!command) {
-        sourceCallback(`§cNo command found with name ${commandArg}!`);
+        source.respond(`§cNo command found with name ${commandArg}!`);
         return;
     }
-    const wordArg = args.get("word") || args.get(1);
+    const wordArg = source.args.get("word") || source.args.get(1);
     if (!wordArg) {
-        sourceCallback("§cYou must provide a word to add!");
+        source.respond("§cYou must provide a word to add!");
         return;
     }
     for (alsoCommand of ratingCommands.commands) {
         for (word of alsoCommand.words) {
             if (wordArg == word.word) {
-                sourceCallback(`§cCommand "${alsoCommand.name}" already has the word "${wordArg}"!`);
+                source.respond(`§cCommand "${alsoCommand.name}" already has the word "${wordArg}"!`);
                 return;
             }
         }
@@ -87,25 +87,25 @@ registerSubcommand("addword", (name, args, sourceCallback, admin) => {
             word: wordArg
         }
     );
-    sourceCallback(`Added word "${wordArg}" to command ${commandArg}!`);
+    source.respond(`Added word "${wordArg}" to command ${commandArg}!`);
 });
 
 // /fplanguage addoverride iq yedel 250
-registerSubcommand("addoverride", (name, args, sourceCallback, admin) => {
-    if (!admin) return;
-    const wordArg = args.get("word") || args.get(0);
+registerSubcommand("addoverride", (source) => {
+    if (!source.admin) return;
+    const wordArg = source.args.get("word") || source.args.get(0);
     if (!wordArg) {
-        sourceCallback("§cYou must provide a word to override!");
+        source.respond("§cYou must provide a word to override!");
         return;
     }
-    const nameArg = args.get("name") || args.get(1);
+    const nameArg = source.args.get("name") || source.args.get(1);
     if (!nameArg) {
-        sourceCallback("§cYou must provide a name to override for!");
+        source.respond("§cYou must provide a name to override for!");
         return;
     }
-    const valueArg = args.get("value") || args.get(2);
+    const valueArg = source.args.get("value") || source.args.get(2);
     if (!valueArg) {
-        sourceCallback("§cYou must provide a value to override with!");
+        source.respond("§cYou must provide a value to override with!");
         return;
     }
     for (let command of ratingCommands.commands) {
@@ -113,23 +113,23 @@ registerSubcommand("addoverride", (name, args, sourceCallback, admin) => {
             if (word.word == wordArg) {
                 if (!word.overrides) word.overrides = new Map();
                 word.overrides[nameArg] = valueArg;
-                sourceCallback(`Set override for word "${wordArg}" to ${valueArg} for ${nameArg}!`);
+                source.respond(`Set override for word "${wordArg}" to ${valueArg} for ${nameArg}!`);
                 return;
             }
         }
     }
-    sourceCallback(`§cCouldn't find word "${wordArg}"!`)
+    source.respond(`§cCouldn't find word "${wordArg}"!`)
 });
 
-registerSubcommand("removeword", (name, args, sourceCallback, admin) => {
-    if (!admin) return;
-    const wordArg = args.get("word") || args.get(0);
+registerSubcommand("removeword", (source) => {
+    if (!source.respond) return;
+    const wordArg = source.args.get("word") || source.args.get(0);
     if (!wordArg) {
-        sourceCallback("§cYou must provide a word to remove!");
+        source.respond("§cYou must provide a word to remove!");
         return;
     }
     for (let command of ratingCommands.commands) {
         command.words = command.words.filter((word) => word.word != wordArg);
     }
-    sourceCallback(`Cleared all instances of "${wordArg}".`);   
+    source.respond(`Cleared all instances of "${wordArg}".`);   
 });

@@ -5,8 +5,8 @@ import { getMatchedArray } from "../utils/arrayMatchers";
 let reactors = new Map();
 let sentences;
 
-registerSubcommand("react", (name, args, sourceCallback) => {
-    const from = args.get("from") || "guild";
+registerSubcommand("react", (source) => {
+    const from = source.args.get("from") || "guild";
     let messages;
     if (from == "guild") {
         messages = messageStore.messages.map((message) => message.message);
@@ -21,19 +21,19 @@ registerSubcommand("react", (name, args, sourceCallback) => {
         sourceCallback(`§cCouldn't find a message set with name ${from}!`);
         return;
     }
-    const reactorName = args.get("reactor") || "word";
+    const reactorName = source.args.get("reactor") || "word";
     let reactor = reactors.get(reactorName);
     if (!reactor) {
         sourceCallback(`§cCouldn't find a reactor with name ${reactorName}!`);
         return;
     }
-    const matcher = args.get("matcher") || "all";
+    const matcher = source.args.get("matcher") || "all";
     const matchedMessages = getMatchedArray(matcher, messages);
     if (!matchedMessages || matchedMessages.length == 0) {
-        sourceCallback(`§cNo elements found with matcher ${matcher}!`);
+        source.respond(`§cNo elements found with matcher ${matcher}!`);
         return;
     }
-    sourceCallback(reactor.react(matchedMessages));
+    source.respond(reactor.react(matchedMessages));
 });
 
 export function registerReactor(name, reactor) {

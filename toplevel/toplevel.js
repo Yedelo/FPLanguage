@@ -8,15 +8,15 @@ export function registerToplevelHandler(toplevelHandler) {
 
 // handles the command name so you don't have to do it yourself
 export function registerToplevelCommand(commandName, toplevelHandler) {
-    toplevelHandlers.push((name, args, sourceCallback) => {
-        const commandArg = args.get(0);
+    toplevelHandlers.push((source) => {
+        const commandArg = source.args.get(0);
         if (commandArg != commandName) return;
-        toplevelHandler(name, args, sourceCallback);
+        toplevelHandler(source);
     });
 }
 
-registerSubcommand("toplevel", (name, args, sourceCallback) => {
+registerSubcommand("toplevel", (source) => {
     toplevelHandlers.forEach((toplevelHandler) => {
-        toplevelHandler(name, args, sourceCallback);
+        toplevelHandler(source);
     });
 });

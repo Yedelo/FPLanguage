@@ -9,7 +9,7 @@ EventListener.createEvent(GUILD_CHAT_EVENT_NAME);
 register("chat", (event) => {
     let chatMessage = removeProperFormatting(event.message.func_150254_d());
     let guildChatMatch = GUILD_CHAT_REGEX.exec(chatMessage);
-    if (guildChatMatch) {
+    if (guildChatMatch?.length >= 3) {
         let guildChatName = guildChatMatch[1];
         let guildChatMessage = guildChatMatch[2];
         let bridgeMessageMatch = BRIDGE_MESSAGE_REGEX.exec(guildChatMessage);
