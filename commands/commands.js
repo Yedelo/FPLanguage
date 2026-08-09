@@ -79,7 +79,13 @@ export function handleCommandMessage(name, message, source) {
         let value = rawArgAsList[1];
         args.set(name, value);
     };
-    new Thread(() => subcommandCallback(name, args, sourceCallback, admin)).start();
+    const source = {
+        name: name,
+        args: args,
+        respond: sourceCallback,
+        admin: admin
+    };
+    new Thread(() => subcommandCallback(source)).start();
 }
 
 export function internal(message) {
