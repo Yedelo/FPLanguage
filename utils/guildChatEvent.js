@@ -23,5 +23,5 @@ register("chat", (event) => {
 });
 
 function removeProperFormatting(text) {
-	return text.replaceAll(/§[0-9a-fk-or]/g, "")
+	return text.replace(/§[0-9a-fk-or]/g, "")
 }
