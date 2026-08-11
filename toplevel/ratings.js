@@ -1,6 +1,6 @@
 import { LocalStore } from "../../tska/storage/LocalStore";
 import { registerSubcommand } from "../commands/commands";
-import { randomInt } from "../utils/commons";
+import { randomElement, randomInt } from "../utils/commons";
 import { registerToplevelHandler } from "./toplevel";
 
 const ratingCommands = new LocalStore("FPLanguage", {
@@ -41,20 +41,32 @@ const ratingCommands = new LocalStore("FPLanguage", {
 }, "data/persistent/ratingCommands.json");
 
 registerToplevelHandler((source) => {
-    const wordArg = source.args.get(0);
+    const firstArg = source.args.get(0);
     const playerName = source.args.get(1) ?? source.name;
-    ratingCommands.commands.forEach((command) => {
-        command.words.forEach((word) => {
-            if (wordArg == word.word) {
-                const percent = word.overrides?.[playerName] ?? randomInt(word.min ?? command.min ?? 0, word.max ?? command.max ?? 101);
-                const message = (word.format ?? command.format)
-                    .replaceAll("${playerName}", playerName)
-                    .replaceAll("${percent}", percent)
-                    .replaceAll("${word}", word.word);
-                source.respond(message);
-            }
+    let matchedCommand;
+    let matchedWord;
+    if (["randomrating", "imfeelinglucky"].includes(firstArg)) {
+        matchedCommand = randomElement(ratingCommands.commands);
+        matchedWord = randomElement(matchedCommand.words);
+    }
+    else {
+        ratingCommands.commands.forEach((command) => {
+            command.words.forEach((word) => {
+                if (firstArg == word.word) {
+                    matchedCommand = command;
+                    matchedWord = word;
+                }
+            });
         });
-    });
+    }
+    if (matchedCommand && matchedWord) {
+        const percent = matchedWord.overrides?.[playerName] ?? randomInt(matchedWord.min ?? matchedCommand.min ?? 0, matchedWord.max ?? matchedCommand.max ?? 101);
+        const message = (matchedWord.format ?? matchedCommand.format)
+            .replaceAll("${playerName}", playerName)
+            .replaceAll("${percent}", percent)
+            .replaceAll("${word}", matchedWord.word);
+        source.respond(message);
+    }
 });
 
 registerSubcommand("addword", (source) => {
@@ -131,5 +143,5 @@ registerSubcommand("removeword", (source) => {
     for (let command of ratingCommands.commands) {
         command.words = command.words.filter((word) => word.word != wordArg);
     }
-    source.respond(`Cleared all instances of "${wordArg}".`);   
+    source.respond(`Cleared all instances of "${wordArg}".`);
 });
