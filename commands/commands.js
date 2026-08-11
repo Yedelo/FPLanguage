@@ -12,7 +12,7 @@ sources.set("ct", (name, message, extra) => {
 sources.set("guild_chat", (name, message, extra) => {
     setTimeout(() => {
         let sent = `/gc ${message.removeFormatting()}`;
-        if (!extra || !extra.noAntiSpam) {
+        if (extra && extra.antiSpam) {
             sent += ` @${randomString(8)}`;
         }
         ChatLib.say(sent);
@@ -22,7 +22,7 @@ sources.set("bridge_bot", sources.get("guild_chat"));
 sources.set("private_message", (name, message, extra) => {
     setTimeout(() => {
         let sent = `/w ${name} ${message.removeFormatting()}`;
-        if (!extra || !extra.noAntiSpam) {
+        if (extra && extra.antiSpam) {
             sent += ` @${randomString(8)}`;
         }
         ChatLib.say(sent);
