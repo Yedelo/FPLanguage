@@ -8,6 +8,7 @@ import "./reactors/reactors";
 import "./toplevel/toplevel";
 import "./toplevel/ratings";
 import "./toplevel/guildvalue";
+import "./toplevel/kill";
 import "./collector";
 import "./utils/commons";
 import "./utils/errorHandling";
