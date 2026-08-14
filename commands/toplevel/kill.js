@@ -10,7 +10,7 @@ const hospital = new LocalStore("FPLanguage", {
 }, "data/persistent/hospital.json");
 
 registerToplevelCommand("kill", (source) => {
-    const name = (source.args.get(1) || source.args.get("name")).toLowerCase();
+    const name = (source.args.get(1) || source.args.get("name"))?.toLowerCase();
     if (!name) {
         source.respond("You must provide a player name to kill!", { antiSpam: true });
         return;
