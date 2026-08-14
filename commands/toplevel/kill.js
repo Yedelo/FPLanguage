@@ -1,11 +1,11 @@
 import { LocalStore } from "../../../tska/storage/LocalStore";
-import { randomInt } from "../../utils/commons";
+import { randomInt, probability } from "../../utils/commons";
 import { registerToplevelCommand } from "./toplevel";
 
 const hospital = new LocalStore("FPLanguage", {
     yedel: {
         hp: 200,
-        damagers: []
+        strikers: []
     }
 }, "data/persistent/hospital.json");
 
@@ -18,7 +18,7 @@ registerToplevelCommand("kill", (source) => {
     if (!hospital[name]) {
         hospital[name] = {
             hp: 100,
-            damagers: []
+            strikers: []
         };
     }
     if (name.equalsIgnoreCase(source.name)) {
@@ -29,17 +29,26 @@ registerToplevelCommand("kill", (source) => {
         source.respond(`${name} is already dead! Ineffective strike...`, { antiSpam: true });
         return;
     }
-    let attacker = source.name;
-    if (hospital[name].damagers.includes(attacker)) {
-        source.respond(`You already attacked ${name}!`, { antiSpam: true });
+    let striker = source.name;
+    if (hospital[name].strikers.includes(striker)) {
+        source.respond(`You already striked ${name}!`, { antiSpam: true });
         return;
     }
-    let damage = randomInt(10, 20);
-    hospital[name].hp -= damage;
+    let change = randomInt(10, 20);
+    if (probability(0.75)) {
+    hospital[name].hp -= change;
     if (hospital[name].hp <= 0) {
-        source.respond(`You dealt ${damage} damage, leaving ${name} dead!`, { antiSpam: true });
+        source.respond(`You dealt ${change} damage, leaving ${name} dead!`, { antiSpam: true });
         return;
     }
-    source.respond(`You dealt ${damage} damage, ${name} is now at ${hospital[name].hp} hp!`, { antiSpam: true });
-    hospital[name].damagers.push(attacker);
+    source.respond(`You dealt ${change} damage, ${name} is now at ${hospital[name].hp} HP!`, { antiSpam: true });
+}
+else {
+    hospital[name].hp += change;
+    if (hospital[name].hp > 100) {
+        hospital[name].hp = 100;
+    }
+    source.respond(`You tried to strike ${name}, but instead healed them for ${change} HP! ${name} is now at ${hospital[name].hp} HP!`, { antiSpam: true });
+}  
+    hospital[name].strikers.push(striker);
 });

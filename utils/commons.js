@@ -15,3 +15,7 @@ export function randomElement(array) {
 export function randomString(length) {
   return Math.random().toString(36).substring(2, length + 2);
 }
+
+export function probability(chance) {
+    return Math.random() < chance;
+}
