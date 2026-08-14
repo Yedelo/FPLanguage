@@ -36,9 +36,21 @@ const ratingCommands = new LocalStore("FPLanguage", {
                     }
                 }
             ]
+        },
+        {
+            name: "location",
+            format: "${word} is at ${percent}, ${percent}, ${percent}!",
+            words: [
+                {
+                    word: "money"
+                }
+            ],
+            min: -50,
+            max: 255
         }
     ]
 }, "data/persistent/ratingCommands.json");
+global.broj = ratingCommands;
 
 registerToplevelHandler((source) => {
     const firstArg = source.args.get(0);
@@ -60,7 +72,9 @@ registerToplevelHandler((source) => {
         });
     }
     if (matchedCommand && matchedWord) {
-        const percent = matchedWord.overrides?.[playerName] ?? randomInt(matchedWord.min ?? matchedCommand.min ?? 0, matchedWord.max ?? matchedCommand.max ?? 101);
+        function percent() {
+            return matchedWord.overrides?.[playerName] ?? randomInt(matchedWord.min ?? matchedCommand.min ?? 0, matchedWord.max ?? matchedCommand.max ?? 101);
+        }
         const message = (matchedWord.format ?? matchedCommand.format)
             .replaceAll("${playerName}", playerName)
             .replaceAll("${percent}", percent)
