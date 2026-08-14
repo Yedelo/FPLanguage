@@ -6,6 +6,9 @@ export const FPL_COMMAND_PREFIX = COMMAND_PREFIX + "fplanguage";
 export const subcommands = new Map();
 const sources = new Map();
 
+sources.set("ct_console", (response) => {
+    console.log(response.message);
+});
 sources.set("ct", (response) => {
     ChatLib.chat(`${LOGO} §r${response.message}`);
 });
