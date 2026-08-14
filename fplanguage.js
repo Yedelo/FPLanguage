@@ -2,6 +2,7 @@ import "./commands/commands";
 import "./commands/ctCommandParser";
 import "./commands/guildChatCommandParser";
 import "./commands/privateMessageCommandParser";
+import "./commands/ping"
 import "./reactors/averageCharacterReactor";
 import "./reactors/averageWordReactor";
 import "./reactors/reactors";
