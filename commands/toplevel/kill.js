@@ -1,5 +1,5 @@
-import { LocalStore } from "../../tska/storage/LocalStore";
-import { randomInt } from "../utils/commons";
+import { LocalStore } from "../../../tska/storage/LocalStore";
+import { randomInt } from "../../utils/commons";
 import { registerToplevelCommand } from "./toplevel";
 
 const hospital = new LocalStore("FPLanguage", {

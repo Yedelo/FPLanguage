@@ -1,5 +1,5 @@
-import { internal, registerSubcommand } from "../commands/commands";
-import { randomInt } from "../utils/commons";
+import { internal, registerSubcommand } from "../commands";
+import { randomInt } from "../../utils/commons";
 import { registerToplevelCommand } from "./toplevel";
 
 const REFRESH_DELAY = 3600;

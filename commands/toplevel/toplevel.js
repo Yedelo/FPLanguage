@@ -1,4 +1,4 @@
-import { registerSubcommand } from "../commands/commands";
+import { registerSubcommand } from "../commands";
 
 const toplevelHandlers = [];
 

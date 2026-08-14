@@ -1,6 +1,6 @@
-import { LocalStore } from "../../tska/storage/LocalStore";
-import { registerSubcommand } from "../commands/commands";
-import { randomElement, randomInt } from "../utils/commons";
+import { LocalStore } from "../../../tska/storage/LocalStore";
+import { registerSubcommand } from "../commands";
+import { randomElement, randomInt } from "../../utils/commons";
 import { registerToplevelHandler } from "./toplevel";
 
 const ratingCommands = new LocalStore("FPLanguage", {
