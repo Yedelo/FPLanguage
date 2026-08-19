@@ -32,7 +32,7 @@ registerToplevelHandler((source) => {
         return;
     }
     let change = randomInt(10, 20);
-    if (probability(0.50)) {
+    if (probability(0.75)) {
         if (hospital[name].hp <= 0) {
             source.respond(`${name} is already dead! Ineffective strike...`, { antiSpam: true });
             return;
