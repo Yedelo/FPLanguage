@@ -19,3 +19,9 @@ export function randomString(length) {
 export function probability(chance) {
     return Math.random() < chance;
 }
+
+export function range(min, max) {
+    return function() {
+        return randomInt(min, max);
+    }
+} 
